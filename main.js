@@ -97,7 +97,7 @@ var app = http.createServer(function(request,response){
             </p>
           </form>`, `create`);
         response.writeHead(200);
-        response.end(template);
+        response.end(html);
       });
 
     }else if(pathname==='/create_process'){
