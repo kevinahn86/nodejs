@@ -2,8 +2,8 @@ var http = require('http');
 var fs = require('fs');
 var url = require('url');
 var qs = require('querystring');
-
-var template = require('./lib/template.js')
+var template = require('./lib/template.js');
+var path = require('path');
 
 var app = http.createServer(function(request,response){
 
@@ -34,7 +34,8 @@ var app = http.createServer(function(request,response){
         fs.readdir('./data', function(err,filelist){
           var list = template.list(filelist);
           var title = queryData.id;
-        fs.readFile(`data/${queryData.id}`, 'utf8', function(err,description){
+          var filteredID = path.parse(queryData.id).base;
+        fs.readFile(`data/${filteredID}`, 'utf8', function(err,description){
           var html= template.html(title,list,
             `<h2>${title}</h2>${description}`
           ,`<a href="/create">create</a>
@@ -94,7 +95,8 @@ var app = http.createServer(function(request,response){
       fs.readdir('./data', function(err,filelist){
         var list = template.list(filelist);
         var title = queryData.id;
-        fs.readFile(`data/${queryData.id}`, 'utf8', function(err,description){
+        var filteredID = path.parse(queryData.id).base;
+        fs.readFile(`data/${filteredID}`, 'utf8', function(err,description){
           var html= template.html(title,list,
             `<form action="http://localhost:3000/update_process"
                   method="post">
@@ -129,7 +131,8 @@ var app = http.createServer(function(request,response){
         var id = post.id;
         var title = post.title;
         var description = post.description;
-          fs.rename(`data/${id}`, `data/${title}`, function(error){
+        var filteredID = path.parse(id).base;
+          fs.rename(`data/${filteredID}`, `data/${title}`, function(error){
             fs.writeFile(`data/${title}`, description, 'utf8', function(err){
               response.writeHead(302, {Location: `/?id=${title}`});
               response.end();
@@ -146,7 +149,8 @@ var app = http.createServer(function(request,response){
       request.on('end', function(){
         var post = qs.parse(body);
         var id = post.id;
-        fs.unlink(`data/${id}`, function(err){
+        var filteredID = path.parse(id).base;
+        fs.unlink(`data/${filteredID}`, function(err){
           response.writeHead(302, {Location: `/`});
           response.end();
         });
