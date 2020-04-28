@@ -150,7 +150,7 @@ var app = http.createServer(function(request,response){
         var post = qs.parse(body);
         var id = post.id;
         var filteredID = path.parse(id).base;
-        fs.unlink(`data/${filteredID}`, function(err){
+        fs.unlink(`data/${filteredID}`, function(err){``
           response.writeHead(302, {Location: `/`});
           response.end();
         });
