@@ -21,7 +21,7 @@
   "homepage": "https://github.com/kevinahn86/nodejs#readme",
   "dependencies": {
     "express": "4.17.1",
-    "mysql": "2.18.1",
+    "mysql": "^2.18.1",
     "sanitize-html": "^1.23.0"
   },
   "devDependencies": {},
