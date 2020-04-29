@@ -8,7 +8,7 @@ var connection = mysql.createConnection({
 
 connection.connect();
 
-connection.query('select 1+1 AS solution', function(err,result,fields){
+connection.query('select * from member', function(err,result,fields){
     if(err){
         console.log(err);
     }
